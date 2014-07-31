@@ -42,7 +42,10 @@ $form = $this->beginWidget('\yg\tb\ActiveForm', array(
             <?php $this->widget('\yg\tb\RedactorWidget', [
                 'model' => $model,
                 'attribute' => 'short_content',
-                'height' => 100
+                'options'=>[
+                    'minHeight'=>100,
+                    'css' => Config::get('mainCssFile'),
+                ],
             ]);?>
             <?= $form->error($model, 'short_content') ?>
         </div>
@@ -53,7 +56,10 @@ $form = $this->beginWidget('\yg\tb\ActiveForm', array(
             <?php $this->widget('\yg\tb\RedactorWidget', [
                 'model' => $model,
                 'attribute' => 'content',
-                'height' => 400
+                'options'=>[
+                    'minHeight'=>400,
+                    'css' => Config::get('mainCssFile'),
+                ],
             ]);?>
             <?= $form->error($model, 'content') ?>
 
