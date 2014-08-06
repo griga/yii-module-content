@@ -37,28 +37,14 @@ $form = $this->beginWidget('\yg\tb\ActiveForm', array(
     <div class="col-sm-12">
         <div class="well">
             <h4><?= t('Content') ?></h4>
-            <div data-ml-group="Slide_content_multilingual">
-                <?php foreach (Lang::getLanguages() as $lang => $langTitle): ?>
-                    <?= CHtml::openTag('div', array(
-                        'data-ml-language'=>$langTitle,
-                        'class'=> $lang == Lang::getDefault() ? '' : 'hidden',
-                    )) ?>
-                    <?php $this->widget('ext.redactor.ImperaviRedactorWidget', array(
-                        'model' => $model,
-                        'attribute' => $lang == Lang::getDefault() ? 'content' : 'content_' . $lang,
-                        'options' => array(
-                            'lang' => Lang::getDefault(),
-                            'iframe' => true,
-                            'css' => '/themes/ekma/front/css/style.css',
-                            'minHeight' => 200,
-                            'imageUpload' => '/admin/dashboard/imageUpload',
-                            'imageGetJson' => '/admin/dashboard/imageList',
-                        ),
-                    ));?>
-                    <?= CHtml::closeTag('div') ?>
-                <?php endforeach; ?>
-                <?= $form->error($model, 'content') ?>
-            </div>
+            <?php $this->widget('\yg\tb\RedactorWidget', [
+                'model' => $model,
+                'attribute' => 'content',
+                'options'=>[
+                    'minHeight'=>400,
+                    'css' => Config::get('mainCssFile'),
+                ],
+            ]);?>
         </div>
         <?php app()->clientScript->registerScript('Slide_content_multilingual','$.fn.ygMultilang.register(\'[data-ml-group="Slide_content_multilingual"]\',{handlerCssClass: "top-minus-offset"})', CClientScript::POS_READY)?>
 

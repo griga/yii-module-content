@@ -38,28 +38,14 @@ $form = $this->beginWidget('\yg\tb\ActiveForm', [
     <div class="col-sm-12">
         <div class="well">
             <h4><?= t('Content') ?></h4>
-            <div data-ml-group="Page_content_multilingual">
-                <?php foreach (Lang::getLanguages() as $lang => $langTitle): ?>
-                    <?= CHtml::openTag('div', [
-                        'data-ml-language'=>$langTitle,
-                        'class'=> $lang == Lang::get() ? '' : 'hidden',
-                    ]) ?>
-                    <?php $this->widget('ext.redactor.ImperaviRedactorWidget', [
-                        'model' => $model,
-                        'attribute' => $lang == Lang::get() ? 'content' : 'content_' . $lang,
-                        'options' => [
-                            'lang' => Lang::get() == 'uk' ? 'ua' : Lang::get(),
-                            'iframe' => true,
-                            'css' => '/themes/ekma/front/css/style.css',
-                            'minHeight' => 400,
-                            'imageUpload' => '/admin/dashboard/imageUpload',
-                            'imageGetJson' => '/admin/dashboard/imageList',
-                        ],
-                    ]);?>
-                    <?= CHtml::closeTag('div') ?>
-                <?php endforeach; ?>
-                <?= $form->error($model, 'content') ?>
-            </div>
+            <?php $this->widget('\yg\tb\RedactorWidget', [
+                'model' => $model,
+                'attribute' => 'content',
+                'options'=>[
+                    'minHeight'=>400,
+                    'css' => Config::get('mainCssFile'),
+                ],
+            ]);?>
         </div>
         <?php app()->clientScript->registerScript('Page_content_multilingual','$.fn.ygMultilang.register(\'[data-ml-group="Page_content_multilingual"]\',{handlerCssClass: "top-minus-offset"})', CClientScript::POS_READY)?>
 
