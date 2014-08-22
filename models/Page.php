@@ -14,5 +14,23 @@ class Page extends Content {
         );
     }
 
+    /**
+     * return behaviors of component merged with parent component behaviors
+     * @return array CBehavior[]
+     */
+
+    public function behaviors(){
+    	return CMap::mergeArray(
+    		parent::behaviors(),
+    		array(
+                'pureContentBehavior'=>[
+                    'class'=>'PureContentBehavior',
+                    'fields'=>[
+                        'content'=>'div',
+                    ]
+                ]
+    	));
+    }
+
 
 } 
